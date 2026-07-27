@@ -30,3 +30,21 @@ keyword_summary = pd.DataFrame([
 ])
 
 print(keyword_summary)
+
+model_features = []
+for name, (_, lines) in keyword_files.items():
+    keywords = [
+        line.strip().upper()
+        for line in lines
+        if line.lstrip().startswith("*")
+    ]
+    for keyword, count in Counter(keywords).most_common():
+        model_features.append({
+            "file": name,
+            "keyword": keyword,
+            "count": count
+        })
+
+model_features = pd.DataFrame(model_features)
+model_features.head(30)
+
