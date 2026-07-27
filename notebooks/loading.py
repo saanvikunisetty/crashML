@@ -48,3 +48,26 @@ for name, (_, lines) in keyword_files.items():
 model_features = pd.DataFrame(model_features)
 model_features.head(30)
 
+d3plot = D3plot(d3plot_file, state_filter = {0, -1})
+d3plot_summary = pd.DataFrame({
+    "feature": [
+        "file",
+        "loaded_timesteps",
+        "nodes",
+        "solid_elements",
+        "shell_elements",
+        "beam_elements",
+        "available_arrays"
+    ],
+    "value": [
+        d3plot_file.name,
+        d3plot.n_timesteps,
+        d3plot.header.n_nodes,
+        d3plot.header.n_solids,
+        d3plot.header.n_shells,
+        d3plot.header.n_beams,
+        len(d3plot.arrays),
+    ],
+})
+
+print(d3plot_summary)
