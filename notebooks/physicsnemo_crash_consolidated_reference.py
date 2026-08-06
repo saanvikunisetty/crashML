@@ -1,5 +1,30 @@
 #!/usr/bin/env python3
 
+"""
+Consolidated PhysicsNeMo crash-surrogate reference pipeline.
+
+Workflow:
+    LS-DYNA d3plot folders
+        -> PhysicsNeMo-Curator
+        -> one VTP file per simulation
+        -> reconstruct node positions through time
+        -> compute training normalization statistics
+        -> train one-shot GeoTransolver
+        -> load checkpoint
+        -> predict complete crash trajectories
+        -> write predicted and exact VTP sequences
+
+Important:
+    - The ML model outputs predicted node trajectories.
+    - The final files are VTP meshes, not new LS-DYNA d3plot solver files.
+    - This script requires PhysicsNeMo and PhysicsNeMo-Curator.
+    - It follows the position-only car-crash GeoTransolver experiment:
+        26 total time steps
+        25 predicted future steps
+        coordinates + thickness as node input
+        75 model outputs per node = 25 * 3
+"""
+
 from __future__ import annotations
 
 import argparse
